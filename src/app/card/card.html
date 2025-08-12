@@ -1,0 +1,87 @@
+<div class="container mt-5">
+  <h2 class="text-center mb-4">🛍 Your Shopping Cart</h2>
+
+  <!-- Product Card 1 -->
+  <div class="cart-item row align-items-center">
+    <!--  -->
+    @if (cardService.getCarditem().length == 0){
+    <div class="alert alert-warning text-center empty-cart">
+      <h4 class="mb-0" routerLink="/" style="cursor: pointer">🔙</h4>
+      <h4 class="mb-0">Your cart is empty</h4>
+    </div>
+    }
+    <!--  -->
+
+    @for (item of cardService.getCarditem(); track item.id) {
+    <div class="col-md-2 text-center">
+      <img [src]="item.image" class="cart-img" alt="Sneakers" />
+    </div>
+    <div class="col-md-4 product-info">
+      <strong>{{ item.title }}</strong><br />
+      <small>{{ item.category }}</small><br />
+      <span class="text-muted">{{ item.price | currency}}</span>
+    </div>
+    <div class="col-md-3 quantity-buttons">
+      <button
+        class="btn btn-outline-secondary btn-sm"
+        (click)="cardService.decrementqty(item)"
+      >
+        –
+      </button>
+      <input
+        type="type"
+        [value]=" item.qty "
+        class="form-control text-center mx-1"
+        style="width: 50px"
+        readonly
+      />
+      <button
+        class="btn btn-outline-secondary btn-sm"
+        (click)="cardService.incrementqty(item)"
+      >
+        +
+      </button>
+    </div>
+    <div class="col-md-2 font-weight-bold">
+      {{ item.price * item.qty | currency}}
+    </div>
+    <div
+      class="col-md-1 text-right d-flex align-items-center justify-content-end gap-2"
+    >
+      <!-- Custom styled checkbox -->
+      <div class="form-check">
+        <input
+          class="form-check-input custom-checkbox"
+          type="checkbox"
+          [checked]="item.is_select"
+          (change)="cardService.selectCarditem(item)"
+        />
+        <label class="form-check-label"></label>
+      </div>
+
+      <button
+        class="btn btn-outline-danger btn-sm"
+        (click)="cardService.removecarditem(item)"
+      >
+        🗑
+      </button>
+    </div>
+    }
+
+    <!--  -->
+    @if (cardService.getCarditem().length > 0){
+    <!-- Total and Pay -->
+    <div class="text-left mt-4">
+      <h4>
+        Total:
+        <span class="text-success"
+          >{{ cardService.getcardtotal() | currency }}</span
+        >
+      </h4>
+      <button class="btn btn-success btn-pay mt-2" routerLink="/paynow">
+        Check Out
+      </button>
+    </div>
+    }
+  </div>
+</div>
