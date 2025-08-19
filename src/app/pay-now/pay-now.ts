@@ -19,7 +19,7 @@ export class PayNow {
   }
   paynow(): any {
     Swal.fire({
-      title: "Thank You Pro Supple 🫵",
+      title: "Thank You Pro 🫵",
       icon: "success",
       draggable: true
     });
